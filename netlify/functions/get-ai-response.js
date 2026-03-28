@@ -3,9 +3,8 @@ exports.handler = async (event) => {
     const { prompt } = JSON.parse(event.body);
     const API_KEY = process.env.GEMINI_API_KEY;
 
-    // এখানে ব্যাকটিক (`) চিহ্ন ব্যবহার করা হয়েছে যা ভেরিয়েবল কাজ করতে সাহায্য করবে
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
-
+// 'v1beta' এর বদলে 'v1' ব্যবহার করুন এবং মডেলের শেষে '-latest' যোগ করুন
+const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash-latest:generateContent?key=${API_KEY}`;
     const response = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
