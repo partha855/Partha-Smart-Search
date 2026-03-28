@@ -1,5 +1,3 @@
-const API_KEY = "AIzaSyDN8qTuT9-APsLjjdSqj_3YPAhPVTMYVbw"; 
-
 document.getElementById('searchBtn').addEventListener('click', async () => {
     const inputField = document.getElementById('userInput');
     const responseArea = document.getElementById('aiResponse');
