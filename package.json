@@ -1,0 +1,9 @@
+{
+  "name": "partha-smart-search",
+  "version": "1.0.0",
+  "description": "Smart search engine using Netlify functions",
+  "main": "index.js",
+  "dependencies": {
+    "node-fetch": "^2.6.1"
+  }
+}
