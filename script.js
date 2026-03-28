@@ -1,5 +1,6 @@
 // ১. ছোট হাতের 'const' ব্যবহার করতে হবে
-const API_KEY = "AIzaSyD33OAF2CFp6azJoZ4pw9AiHipff5GJcX4"; 
+const API_KEY = "AIzaSyDN8qTuT9-APsLjJdSqJ_3YPAhPVTMyVBw
+"; 
 
 document.getElementById('searchBtn').addEventListener('click', async () => {
     const inputField = document.getElementById('userInput');
