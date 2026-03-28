@@ -3,8 +3,9 @@ exports.handler = async (event) => {
     const { prompt } = JSON.parse(event.body);
     const API_KEY = process.env.GEMINI_API_KEY;
 
-// 'v1beta' এর বদলে 'v1' ব্যবহার করুন এবং মডেলের শেষে '-latest' যোগ করুন
-const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash-latest:generateContent?key=${API_KEY}`;
+    // স্ট্যাবল ভার্সন v1 এবং flash-latest ব্যবহার করা হয়েছে
+    const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash-latest:generateContent?key=${API_KEY}`;
+
     const response = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -15,6 +16,7 @@ const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flas
 
     const data = await response.json();
     
+    // API থেকে কোনো এরর আসলে তা হ্যান্ডেল করা
     if (data.error) {
        return { 
          statusCode: 500, 
@@ -22,15 +24,16 @@ const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flas
        };
     }
 
+    // রেসপন্স ঠিকঠাক থাকলে ডাটা পাঠানো
     return {
       statusCode: 200,
       body: JSON.stringify({ text: data.candidates[0].content.parts[0].text })
     };
+
   } catch (error) {
     return { 
       statusCode: 500, 
-      body: JSON.stringify({ text: "সার্ভার সমস্যা, আবার চেষ্টা করুন।" }) 
+      body: JSON.stringify({ text: "সার্ভার সমস্যা: " + error.message }) 
     };
   }
 };
-
