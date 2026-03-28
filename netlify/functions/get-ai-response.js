@@ -1,9 +1,7 @@
-const fetch = require('node-fetch');
-
 exports.handler = async (event) => {
   try {
     const { prompt } = JSON.parse(event.body);
-    const API_KEY = process.env.GEMINI_API_KEY; // এটি নেটলিফাই লকার থেকে আসবে
+    const API_KEY = process.env.GEMINI_API_KEY;
 
     const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
       method: 'POST',
@@ -14,12 +12,17 @@ exports.handler = async (event) => {
     });
 
     const data = await response.json();
+    
+    if (data.error) {
+       return { statusCode: 500, body: JSON.stringify({ text: "API Error: " + data.error.message }) };
+    }
+
     return {
       statusCode: 200,
       body: JSON.stringify({ text: data.candidates[0].content.parts[0].text })
     };
   } catch (error) {
-    return { statusCode: 500, body: JSON.stringify({ error: "Failed to fetch AI response" }) };
+    return { statusCode: 500, body: JSON.stringify({ text: "সার্ভার সমস্যা, আবার চেষ্টা করুন।" }) };
   }
 };
 
