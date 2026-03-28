@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partha Smart Search Engine</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>Partha Smart Search</h1>
+            <p>যেকোনো প্রশ্নের উত্তর পান মুহূর্তেই</p>
+        </header>
+
+        <main class="search-section">
+            <div class="input-group">
+                <input type="text" id="userInput" placeholder="আপনার প্রম্পট এখানে লিখুন...">
+                <button id="searchBtn">খুঁজুন</button>
+            </div>
+
+            <div class="result-box" id="resultArea">
+                <div id="loader" class="hidden">এআই ভাবছে...</div>
+                <div id="aiResponse">আপনার উত্তরটি এখানে দেখা যাবে।</div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 AI Project | Powered by Gemini API</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
