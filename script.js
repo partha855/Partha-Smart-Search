@@ -1,47 +1,28 @@
 document.getElementById('searchBtn').addEventListener('click', async () => {
-    const inputField = document.getElementById('userInput');
+    const prompt = document.getElementById('userInput').value.trim();
     const responseArea = document.getElementById('aiResponse');
     const loader = document.getElementById('loader');
-    
-    const prompt = inputField.value.trim();
 
     if (!prompt) {
-        alert("দয়া করে কিছু টাইপ করুন!");
+        alert("দয়া করে কিছু লিখুন!");
         return;
     }
 
-    // লোডার দেখানো এবং আগের উত্তর মোছা
-    responseArea.innerText = ""; 
-    loader.classList.remove('hidden');
+    responseArea.innerText = "";
     loader.style.display = "block";
 
     try {
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
+        const response = await fetch('/.netlify/functions/get-ai-response', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                contents: [{ parts: [{ text: prompt }] }]
-            })
+            body: JSON.stringify({ prompt: prompt })
         });
 
         const data = await response.json();
-        
         loader.style.display = "none";
-        loader.classList.add('hidden');
-
-        if (data.candidates && data.candidates.length > 0) {
-            const text = data.candidates[0].content.parts[0].text;
-            responseArea.innerText = text;
-        } else {
-            responseArea.innerText = "দুঃখিত, এআই কোনো উত্তর দিতে পারছে না। আপনার API Key চেক করুন।";
-            console.error("API Error:", data);
-        }
-
+        responseArea.innerText = data.text;
     } catch (error) {
         loader.style.display = "none";
-        loader.classList.add('hidden');
-        responseArea.innerText = "সার্ভারের সাথে সংযোগ করা যাচ্ছে না। দয়া করে আবার চেষ্টা করুন।";
-        console.error("Error:", error);
+        responseArea.innerText = "সার্ভার সমস্যা, আবার চেষ্টা করুন।";
     }
 });
 
